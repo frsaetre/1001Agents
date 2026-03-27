@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D365 Project Operations &mdash; 80 AI Agents</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <style>
+/* Deep Dive Card Grid */
+.dd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+@media (max-width: 640px) {
+  .dd-grid { grid-template-columns: 1fr; }
+}
+.dd-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+}
+.dd-card:hover { box-shadow: var(--shadow-lg); }
+.dd-card__summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--gray-900);
+  list-style: none;
+  user-select: none;
+}
+.dd-card__summary::-webkit-details-marker { display: none; }
+.dd-card__summary::marker { display: none; content: ""; }
+.dd-card__badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.badge--blue, .dd-card__badge.badge--blue { background: var(--ms-blue); }
+.badge--purple, .dd-card__badge.badge--purple { background: var(--ms-purple); }
+.dd-card__title { flex: 1; }
+.dd-card__chevron {
+  font-size: .7rem;
+  transition: transform .25s;
+  color: var(--gray-500);
+}
+details[open] .dd-card__chevron { transform: rotate(180deg); }
+.dd-card__body {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--gray-200);
+}
+.dd-section { margin-top: 18px; }
+.dd-section h4 {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--ms-dark-blue);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.dd-section h5 {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin: 10px 0 4px;
+}
+.dd-section p, .dd-section li {
+  font-size: .88rem;
+  line-height: 1.6;
+  color: var(--gray-700);
+}
+.dd-section ul, .dd-section ol {
+  padding-left: 20px;
+  margin: 6px 0;
+}
+.dd-section li { margin-bottom: 4px; }
+
+/* ROI Table inside cards */
+.roi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .82rem;
+  margin: 8px 0;
+}
+.roi-table th {
+  background: var(--gray-100);
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--gray-300);
+}
+.roi-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.roi-table tr:hover td { background: var(--gray-50); }
+
+/* Mermaid in cards */
+.dd-section pre.mermaid {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  overflow-x: auto;
+  font-size: .85rem;
+}
+
+/* Chart height override */
+.chart-container canvas { min-height: 400px; }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<nav class="top-nav">
+  <div class="container">
+    <a href="index.html" class="top-nav__brand">
+      <img src="../images/microsoft-logo-white.png" alt="Microsoft">
+      D365 Agentic Cases
+    </a>
+    <div class="top-nav__links">
+      <a href="index.html">Overview</a>
+      <a href="finance.html">Finance</a>
+      <a href="scm.html">Supply Chain</a>
+      <a href="sales.html">Sales</a>
+      <a href="customer-service.html">Customer Service</a>
+      <a href="field-service.html">Field Service</a>
+      <a href="commerce.html">Commerce</a>
+      <a href="hr.html">Human Resources</a>
+      <a href="project-ops.html" class="active">Project Ops</a>
+      <a href="customer-insights.html">Customer Insights</a>
+      <a href="ci-data.html">CI &mdash; Data</a>
+      <a href="ci-journeys.html">CI &mdash; Journeys</a>
+      <a href="cross-app.html">Cross-App</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero__bg" style="background-image:url('../images/hero-projops.jpg')"></div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <img src="../images/ProjectOperations_scalable.svg" alt="D365 Project Operations" class="hero__logo">
+    <h1 class="hero__title">D365 Project Operations &mdash; 80 AI Agents</h1>
+    <p class="hero__subtitle">
+      From intelligent quote estimation and resource matching to automated billing, revenue recognition,
+      and portfolio analytics &mdash; 80 autonomous agents transforming project-based professional services.
+    </p>
+    <div class="hero__stats">
+      <div class="hero__stat">
+        <span class="hero__stat-number">80</span>
+        <span class="hero__stat-label">AI Agents</span>
+      </div>
+      <div class="hero__stat">
+        <span class="hero__stat-number">8</span>
+        <span class="hero__stat-label">Functional Areas</span>
+      </div>
+      <div class="hero__stat">
+        <span class="hero__stat-number">20</span>
+        <span class="hero__stat-label">Deep Dives</span>
+      </div>
+      <div class="hero__stat">
+        <span class="hero__stat-number">340%+</span>
+        <span class="hero__stat-label">Avg ROI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INTRO ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__header fade-in">
+      <span class="section__tag">Project Operations</span>
+      <h2 class="section__title">AI-Driven Project Lifecycle Management</h2>
+    </div>
+    <div class="fade-in" style="max-width:860px;margin:0 auto;">
+      <p style="margin-bottom:16px;color:var(--gray-700);font-size:1.05rem;line-height:1.7;">
+        Dynamics 365 Project Operations unifies project sales, planning, resourcing, delivery, and
+        accounting into a single platform for professional services organizations. These 80 AI agents
+        automate the most time-consuming, error-prone, and revenue-critical processes across the entire
+        project lifecycle &mdash; from the moment a quote is created through delivery, billing, and closeout.
+      </p>
+      <p style="margin-bottom:16px;color:var(--gray-700);font-size:1.05rem;line-height:1.7;">
+        The agents span 8 functional areas: Sales &amp; Estimation, Project Planning, Resource Management,
+        Time &amp; Expense, Project Delivery, Project Accounting &amp; Billing, Analytics &amp; Reporting, and
+        Integration. Each agent leverages Azure AI, Power Platform, Copilot Studio, and the D365 Project
+        Operations data model to deliver measurable business outcomes.
+      </p>
+      <p style="color:var(--gray-700);font-size:1.05rem;line-height:1.7;">
+        The 20 deep-dive agents (10 horizontal, 10 industry-aligned) include detailed architectures with
+        Mermaid flowcharts, quantified ROI, user stories, and phased implementation roadmaps &mdash; covering
+        consulting, IT services, construction, engineering, and architecture industries.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHARTS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section__header fade-in">
+      <span class="section__tag">By the Numbers</span>
+      <h2 class="section__title">Agent Distribution Across Project Operations</h2>
+    </div>
+    <div class="chart-row fade-in">
+      <div class="chart-container">
+        <div class="chart-container__title">Agents by Functional Area</div>
+        <canvas id="areaBarChart" height="400"></canvas>
+      </div>
+      <div class="chart-container">
+        <div class="chart-container__title">Portfolio Composition</div>
+        <canvas id="areaDoughnut" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEEP DIVES ============ -->
+<section class="section section--alt" id="deep-dives">
+  <div class="container">
+    <div class="section__header fade-in">
+      <span class="section__tag">Deep Dives</span>
+      <h2 class="section__title">20 Agent Deep-Dive Cards</h2>
+      <p class="section__desc">Click any card to expand the full deep dive &mdash; architecture diagrams, ROI metrics, user stories, and implementation roadmaps.</p>
+    </div>
+    <div class="dd-grid fade-in">
+      <div class="dd-card" id="dd-12">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H1</span>
+      <span class="dd-card__title">#12 &mdash; WBS Auto-Generator Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>The Billing Method Advisor Agent helps consulting and IT services firms make one of the most consequential financial decisions on every engagement: whether to bill Time & Materials (T&M) or Fixed Price. This choice has cascading implications for margin risk, revenue recognition, cash flow timing,...</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        <table class="roi-table"><thead><tr><th>Metric</th><th>Before</th><th>After</th><th>Improvement</th></tr></thead><tbody><tr><td>Margin loss from wrong billing method</td><td>7% avg</td><td>2% avg</td><td>-5 points</td></tr><tr><td>Projects with billing method regret</td><td>30%</td><td>10%</td><td>-20 points</td></tr><tr><td>Fixed-price scope creep frequency</td><td>45% of FP projects</td><td>25%</td><td>-20 points</td></tr><tr><td>Revenue uplift from optimal method selection</td><td>—</td><td>$180K/year (per $10M revenue)</td><td>New benefit</td></tr><tr><td>Decision time for billing method</td><td>2 days</td><td>1 hour</td><td>95% faster</td></tr></tbody></table>
+        <ul><li>Month 1–2: Historical billing method performance data analyzed</li><li>Month 3–4: Recommendation engine deployed for new contract lines</li><li>Month 5–6: Margin simulation and hybrid billing advisory added</li><li>12-Month ROI: 380% (margin improvement + risk reduction)</li></ul>
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        <ol><li><strong>As a practice lead</strong>, I want a data-driven recommendation on billing method for each contract line so that I can make informed pricing decisions rather than defaulting to habit.</li><li><strong>As a finance controller</strong>, I want margin simulations under T&M and fixed-price scenarios so that I can quantify the financial risk of each billing approach.</li><li><strong>As a project manager</strong>, I want to understand why a particular billing method was recommended so that I can explain the rationale during project kickoff.</li><li><strong>As a consultant</strong>, I want the billing method to match the project's scope certainty so that I'm not pressured to absorb scope changes on a fixed-price contract.</li><li><strong>As a PMO director</strong>, I want portfolio analytics on billing method performance so that I can refine our organizational pricing strategy.</li></ol>
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Project Created / Manual Request] --> B[Document Intelligence]
+    B --> C[SOW Extraction]
+    C --> D[Similarity Engine]
+    D --> E[Historical Match - Top 5]
+    E --> F[WBS Generator]
+    F --> G[Task Builder + Durations]
+    G --> H[Dependency Engine]
+    H --> I[Milestone Aligner]
+    I --> J[Draft WBS for PM Review]
+    J --> K{PM Approves?}
+    K -->|Yes| L[Commit to Schedule]
+    K -->|No| M[PM Edits & Resubmits]
+    M --> J
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        <h5>Phase 1: Foundation (Weeks 1–3)</h5><ul><li>Analyze historical project performance segmented by billing method</li><li>Build scope clarity assessment framework with practice leadership</li><li>Configure billing method performance data warehouse</li><li>Define recommendation output format for contract line annotations</li></ul><h5>Phase 2: Core Development (Weeks 4–8)</h5><ul><li>Build scope clarity assessor using Azure OpenAI for text analysis</li><li>Develop margin simulation engine for T&M, fixed-price, and hybrid scenarios</li><li>Implement historical performance retrieval for similar engagements</li><li>Create recommendation generator with financial justification logic</li></ul><h5>Phase 3: Integration & Testing (Weeks 9–11)</h5><ul><li>Integrate with D365 contract line entity for trigger and output</li><li>Pilot with sales team: compare agent recommendations vs. actual decisions</li><li>Validate margin simulations against completed project outcomes</li><li>Refine scope clarity assessment with practice lead feedback</li></ul><h5>Phase 4: Deployment & Optimization (Weeks 12–14)</h5><ul><li>Deploy for all new contract lines with recommendation logging</li><li>Enable portfolio-level billing method analytics dashboard</li><li>Track recommendation acceptance rate and post-project margin outcomes</li><li>Extend to hybrid billing advisory for complex multi-phase engagements</li></ul>
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-24">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H2</span>
+      <span class="dd-card__title">#24 &mdash; Skill-Based Resource Matching Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Matches open resource requirements against the resource pool using multi-criteria analysis of skills, certifications, availability, location, and past performance to recommend optimal resource assignments.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Resource Requirement Created] --> B[Requirement Parser]
+    B --> C[Eligibility Filter]
+    C --> D[Multi-Criteria Scoring]
+    D --> E["Skill Fit (40%)"]
+    D --> F["Availability (25%)"]
+    D --> G["Utilization Balance (15%)"]
+    D --> H["Team Continuity (10%)"]
+    D --> I["Dev Alignment (10%)"]
+    E & F & G & H & I --> J[Rank Candidates Top-10]
+    J --> K[Conflict Check]
+    K --> L[Ranked List + Trade-Offs]
+    L --> M{RM Approves?}
+    M -->|Yes| N[One-Click Booking]
+    M -->|No| O[Adjust & Re-rank]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-25">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H3</span>
+      <span class="dd-card__title">#25 &mdash; Resource Utilization Optimization Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Monitors resource utilization rates across the organization, identifies underutilized and overutilized resources, and recommends rebalancing actions including reassignment, bench management, and training investments.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Daily Timer / Booking Changed] --> B[Utilization Calculator]
+    B --> C[Current Week Metrics]
+    C --> D{Threshold Check}
+    D -->|Under 60%| E[Underutilized Alert]
+    D -->|60-90%| F[Optimal Range]
+    D -->|Over 90%| G[Overutilized Alert]
+    E --> H[Root Cause Analyzer]
+    G --> H
+    H --> I[Rebalancing Recommender]
+    I --> J[30/60/90 Day Forecast]
+    J --> K[Power BI Dashboard]
+    J --> L[Teams Adaptive Cards]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-35">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H4</span>
+      <span class="dd-card__title">#35 &mdash; Intelligent Time Entry Suggestion Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Pre-populates weekly time entry grids based on resource bookings, recent time entry patterns, scheduled meetings, and project task assignments, reducing manual data entry effort for consultants.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Grid Opened / Monday Schedule] --> B[Booking Mapper]
+    A --> C[Calendar Analyzer]
+    A --> D[Pattern Recognizer]
+    B --> E[Week's Project Tasks]
+    C --> F[Graph API Events]
+    D --> G[Last 4 Weeks History]
+    E & F & G --> H[Hour Distribution Engine]
+    H --> I["Booking 40% + Calendar 35% + Pattern 25%"]
+    I --> J[Category Rules Applied]
+    J --> K[Pre-Filled Time Grid]
+    K --> L{Consultant Reviews}
+    L -->|Accept| M[Quick Submit]
+    L -->|Edit| N[Modify & Submit]
+    N --> O[Feedback Loop Learns]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-49">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H5</span>
+      <span class="dd-card__title">#49 &mdash; Actuals vs. Estimate Variance Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Continuously compares actual costs and effort against project estimates, identifies variances exceeding configurable thresholds, and generates variance analysis reports with contributing factor breakdowns.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Actuals Posted / Daily Scan] --> B[Actuals Aggregator]
+    B --> C[By Task & Category]
+    C --> D[Variance Calculator]
+    D --> E[Actual vs Estimate]
+    E --> F{Threshold Exceeded?}
+    F -->|No| G[Log & Continue]
+    F -->|Yes| H[Root-Cause Decomposer]
+    H --> I[Task / Resource / Category]
+    I --> J[EAC Predictor]
+    J --> K[Azure ML Trend Model]
+    K --> L[Power BI Dashboard]
+    K --> M[Teams Alert - Severity 1-3]
+    K --> N[Auto-Commentary Report]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-52">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H6</span>
+      <span class="dd-card__title">#52 &mdash; Scope Creep Detection Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Monitors project actuals, change requests, and task additions against the original baseline, quantifying scope creep in terms of effort, cost, and timeline impact, and recommending corrective actions.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Task Added / Effort Increased] --> B[Baseline Compare]
+    A2[Change Request Submitted] --> B
+    B --> C[Current vs Baseline WBS]
+    C --> D[Drift Calculator]
+    D --> E["Delta Effort + Cost + Timeline"]
+    E --> F[Attribution Classifier]
+    F --> G{Planned or Unplanned?}
+    G -->|Planned| H[Has Change Order]
+    G -->|Unplanned| I[Scope Creep Flagged]
+    I --> J{Threshold Exceeded?}
+    J -->|Yes| K[Change Order Recommendation]
+    K --> L[Financial Impact Report]
+    J -->|No| M[Accumulate & Monitor]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-58">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H7</span>
+      <span class="dd-card__title">#58 &mdash; Proforma Invoice Generation Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Automatically generates proforma invoices based on approved time and expense actuals (T&M) or completed milestones (fixed-price), applying correct rates, markups, and contract terms.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Billing Cycle Date] --> D[Prerequisite Validator]
+    B[Milestone Completed] --> D
+    C[Manual Request] --> D
+    D --> E{All Prerequisites Met?}
+    E -->|No| F[Route Blockers to Owners]
+    F --> G[48-Hour Deadline]
+    E -->|Yes| H[Actuals Assembly]
+    H --> I["T&M + Fixed-Price Lines"]
+    I --> J[Rate & Markup Calculator]
+    J --> K[Invoice Line Grouper]
+    K --> L[Proforma Generator]
+    L --> M[Draft Invoice Created]
+    M --> N[Finance Review Queue]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-60">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H8</span>
+      <span class="dd-card__title">#60 &mdash; Revenue Recognition Automation Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Calculates and posts revenue recognition entries based on percentage-of-completion or estimate-at-completion methods, maintaining ASC 606/IFRS 15 compliance across the project portfolio.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Period-End Close] --> D[Method Classifier]
+    B[Contract Modified] --> D
+    C[Mid-Period Schedule] --> D
+    D --> E{"T&M / Fixed-Price / Milestone"}
+    E -->|Fixed-Price| F["Completion % = Actual Cost / EAC"]
+    E -->|T&M| G[Revenue on Approval]
+    E -->|Milestone| H[Revenue on Delivery]
+    F --> I[Cumulative Rev Calc]
+    G --> I
+    H --> I
+    I --> J[Period Recognition Entry]
+    J --> K[Journal Entry Generator]
+    K --> L[D365 Finance GL Posting]
+    J --> M[Audit Doc Producer]
+    M --> N[Compliance Dashboard]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-62">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H9</span>
+      <span class="dd-card__title">#62 &mdash; Project Budget vs. Actuals Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Continuously tracks project budget consumption against approved budgets, provides time-phased burn-rate analysis, and alerts project managers when budget consumption trends predict overruns.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Actuals Posted / Daily Scan] --> B[Cost Aggregator]
+    B --> C["Actuals + Committed Costs"]
+    C --> D[Consumption % Calculator]
+    D --> E{Threshold Tier?}
+    E -->|Green < 70%| F[Normal Tracking]
+    E -->|Amber 70-85%| G[Warning Alert]
+    E -->|Red 85-95%| H[Critical Alert]
+    E -->|Over 95%| I[Budget Breach Alert]
+    G & H & I --> J[Trajectory Projector]
+    J --> K[Remaining Budget / Burn Rate]
+    K --> L{Overrun Projected?}
+    L -->|Yes| M[Auto-Populate Amendment]
+    L -->|No| N[Continue Monitoring]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-74">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--blue">H10</span>
+      <span class="dd-card__title">#74 &mdash; Revenue Leakage Detection Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Identifies unbilled approved time and expenses, expired unused contract values, under-billed rate card discrepancies, and missed billing milestones to quantify and recover revenue leakage.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Weekly Scan / Real-Time Event] --> B[Unbilled Time Scanner]
+    A --> C[Rate Compliance Checker]
+    A --> D[Contract Value Tracker]
+    B --> E[Approved but Unbilled]
+    C --> F[Billed vs Contract Rates]
+    D --> G[Expiring Contract Values]
+    E & F & G --> H[Leakage Aggregator]
+    H --> I[Categorize & Quantify $]
+    I --> J[Priority Scorer]
+    J --> K[Weekly Leakage Report]
+    J --> L[Recovery Action Tasks]
+    J --> M[Trend Dashboard]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-1">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I1</span>
+      <span class="dd-card__title">#1 &mdash; Project Quote Line Estimator Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>The WBS Auto-Generator Agent transforms how project managers create Work Breakdown Structures in Dynamics 365 Project Operations. Instead of manually building task hierarchies from scratch for every new engagement, this agent ingests project scope descriptions, Statement of Work documents, and na...</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        <table class="roi-table"><thead><tr><th>Metric</th><th>Before</th><th>After</th><th>Improvement</th></tr></thead><tbody><tr><td>WBS creation time</td><td>6 hours avg</td><td>30 minutes</td><td>92% reduction</td></tr><tr><td>Project kickoff delay</td><td>2 days</td><td>0.5 days</td><td>75% faster</td></tr><tr><td>Dependency accuracy</td><td>65%</td><td>94%</td><td>+29 percentage points</td></tr><tr><td>Effort estimation variance</td><td>±35%</td><td>±12%</td><td>66% more accurate</td></tr><tr><td>Annual PM hours saved (50 projects)</td><td>300 hours</td><td>25 hours</td><td>275 hours saved (~$27,500)</td></tr></tbody></table>
+        <ul><li>Month 1–2: Agent trained on historical project data; pilot with 3 project templates</li><li>Month 3–4: Expanded to all project types; dependency engine refined</li><li>Month 5–6: Effort calibration model activated using completed project actuals</li><li>12-Month ROI: 340% (based on PM time savings + reduced rework + faster kickoff)</li></ul>
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        <ol><li><strong>As a project manager</strong>, I want to upload a SOW document and receive a draft WBS so that I can start project planning in minutes instead of hours.</li><li><strong>As a PMO director</strong>, I want all projects to follow consistent WBS naming conventions and hierarchy standards so that portfolio reporting is reliable and comparable.</li><li><strong>As a practice lead</strong>, I want the WBS to reflect actual delivery patterns from past similar projects so that effort estimates are grounded in organizational experience.</li><li><strong>As a resource manager</strong>, I want WBS tasks to include role-based assignments so that I can begin resource matching immediately after WBS approval.</li><li><strong>As a finance controller</strong>, I want WBS milestones to align with contract billing schedules so that revenue recognition points are properly defined from the start.</li></ol>
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Quote Line Created] --> B[Scope Extractor]
+    A2[Quote Revision Request] --> B
+    B --> C[Azure OpenAI NLP]
+    C --> D[Similarity Matcher]
+    D --> E[Top-5 Historical Projects]
+    E --> F[Effort Estimator]
+    F --> G[Role-Based Breakdown]
+    G --> H[Expense Ratio Applier]
+    H --> I[Risk & Contingency Calc]
+    I --> J[Confidence Interval Builder]
+    J --> K[Quote Line Estimates]
+    J --> L[Sensitivity Report]
+    K --> M[Sales Team Notification]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        <h5>Phase 1: Foundation (Weeks 1–3)</h5><ul><li>Inventory and cleanse historical project data (50+ completed projects with WBS and actuals)</li><li>Configure Azure AI Document Intelligence for SOW parsing with custom extraction models</li><li>Define WBS standards: naming conventions, hierarchy depth rules, required fields</li><li>Set up Azure Functions project scaffolding and Dataverse connection layer</li></ul><h5>Phase 2: Core Development (Weeks 4–8)</h5><ul><li>Build project similarity engine using Azure ML embeddings on historical data</li><li>Develop WBS generation logic with task hierarchy, durations, and role assignments</li><li>Implement dependency inference engine based on historical task relationships</li><li>Create milestone alignment module linking WBS to contract billing schedules</li></ul><h5>Phase 3: Integration & Testing (Weeks 9–11)</h5><ul><li>Integrate with Power Automate triggers on `msdyn_project` creation events</li><li>Build Copilot Studio conversation flow for natural-language scope input</li><li>UAT with 5 project managers across different project types</li><li>Calibrate confidence scoring and refine similarity matching thresholds</li></ul><h5>Phase 4: Deployment & Optimization (Weeks 12–14)</h5><ul><li>Production deployment with feature flags for phased rollout</li><li>Enable feedback loop: completed project variance feeds back into the model</li><li>Monitor WBS acceptance rate and PM modification patterns</li><li>Publish PM training guide and best practices for agent-assisted planning</li></ul>
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-7">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I2</span>
+      <span class="dd-card__title">#7 &mdash; Billing Method Advisor Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>The Proforma Invoice Generation Agent automates the most revenue-critical process in project-based businesses: converting approved project work into billable invoices. In organizations running dozens or hundreds of concurrent projects, the billing cycle is a complex orchestration of approved time...</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        <table class="roi-table"><thead><tr><th>Metric</th><th>Before</th><th>After</th><th>Improvement</th></tr></thead><tbody><tr><td>Billing cycle duration</td><td>4 days</td><td>4 hours</td><td>95% faster</td></tr><tr><td>Invoice error rate</td><td>10%</td><td>2%</td><td>-8 percentage points</td></tr><tr><td>Finance team billing hours/cycle</td><td>40 hours</td><td>8 hours</td><td>80% reduction</td></tr><tr><td>Days Sales Outstanding (DSO)</td><td>52 days</td><td>41 days</td><td>-11 days</td></tr><tr><td>Annual cash flow acceleration</td><td>—</td><td>$1.2M (from DSO improvement)</td><td>New benefit</td></tr></tbody></table>
+        <ul><li>Month 1–2: Billing trigger configuration and prerequisite check logic built</li><li>Month 3–4: Automated proforma generation for T&M projects deployed</li><li>Month 5–6: Fixed-price milestone billing and retainer drawdown added</li><li>12-Month ROI: 620% (DSO improvement + finance team productivity)</li></ul>
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        <ol><li><strong>As a finance controller</strong>, I want proforma invoices auto-generated when billing milestones are reached so that billing is never delayed by manual assembly.</li><li><strong>As a project manager</strong>, I want to be alerted 48 hours before a billing date if there are unapproved time entries so that I can expedite approvals.</li><li><strong>As a practice lead</strong>, I want billing rates automatically validated against contract terms so that rate errors don't reach clients.</li><li><strong>As a consultant</strong>, I want my approved time and expenses to flow into invoices without manual intervention so that I'm not chased for billing corrections.</li><li><strong>As a PMO director</strong>, I want visibility into billing cycle metrics (time to invoice, error rates, DSO) so that I can measure and improve billing efficiency.</li></ol>
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Contract Line Created] --> B[Scope Clarity Assessor]
+    A2[Scope Modified] --> B
+    B --> C["High / Medium / Low Certainty"]
+    C --> D[Historical Perf Analyzer]
+    D --> E["Similar Projects by Method"]
+    E --> F[Margin Simulator]
+    F --> G["T&M Scenario"]
+    F --> H["Fixed-Price Scenario"]
+    F --> I["Hybrid Scenario"]
+    G & H & I --> J[Risk-Adjusted Comparison]
+    J --> K[Recommendation Generator]
+    K --> L[Recommendation Card]
+    K --> M[Margin Simulation Report]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        <h5>Phase 1: Foundation (Weeks 1–3)</h5><ul><li>Map all billing scenarios: T&M, fixed-price milestones, retainer drawdowns</li><li>Document rate card structures and markup rules across all contract types</li><li>Configure Azure Service Bus for reliable billing trigger processing</li><li>Design prerequisite check rules with finance team</li></ul><h5>Phase 2: Core Development (Weeks 4–8)</h5><ul><li>Build actuals assembly engine with correct rate application and grouping</li><li>Develop prerequisite validator with 48-hour pre-billing blocker alerts</li><li>Implement invoice line grouping per client billing preferences</li><li>Create proforma generation pipeline with D365 Invoice API integration</li></ul><h5>Phase 3: Integration & Testing (Weeks 9–11)</h5><ul><li>UAT with finance team on 10 representative billing scenarios</li><li>Validate rate accuracy against manual billing calculations</li><li>Test billing trigger reliability across T&M and fixed-price contracts</li><li>Parallel run: auto-generated vs. manual invoices for 2 billing cycles</li></ul><h5>Phase 4: Deployment & Optimization (Weeks 12–14)</h5><ul><li>Production deployment for T&M billing first, fixed-price in week 2</li><li>Enable billing metrics dashboard for finance leadership</li><li>Monitor correction rates and tune prerequisite validation rules</li><li>Automate invoice PDF generation and client delivery workflow</li></ul>
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-23">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I3</span>
+      <span class="dd-card__title">#23 &mdash; Resource Demand Forecasting Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Analyzes the project pipeline, confirmed contracts, and historical demand patterns to forecast resource demand by role, skill, and organizational unit over configurable time horizons (30/60/90 days).</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Active Project Requirements] --> D[Confirmed Demand Aggregator]
+    B["Sales Pipeline (Weighted)"] --> E[Pipeline Probabilizer]
+    C[Historical Patterns 24mo] --> F[Seasonal Adjuster]
+    D & E & F --> G[Demand Synthesizer]
+    G --> H[Gap Analyzer]
+    H --> I["Demand vs Supply by Role"]
+    I --> J{Gaps Found?}
+    J -->|Yes| K[Hire / Train / Subcontract]
+    J -->|No| L[Balanced - Monitor]
+    K --> M[30/60/90 Day Forecast]
+    M --> N[Power BI Dashboard]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-30">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I4</span>
+      <span class="dd-card__title">#30 &mdash; Bench Management Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Monitors unassigned resources (bench), matches their skills against upcoming project needs, recommends training or internal project assignments, and alerts managers when bench time exceeds organizational thresholds.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Booking Expired] --> D[Bench Validator]
+    B[Project Completed] --> D
+    C[Daily Scan] --> D
+    D --> E{"Exclude Leave / Future Bookings"}
+    E -->|On Bench| F[Demand Matcher]
+    F --> G[Skill-to-Requirement Scoring]
+    G --> H[Pipeline Pre-Matcher]
+    H --> I[Activity Recommender]
+    I --> J["1. Billable Assignment"]
+    I --> K["2. Client Development"]
+    I --> L["3. Training / Certs"]
+    I --> M["4. Internal Projects"]
+    J & K & L & M --> N{Bench > 10 Days?}
+    N -->|Yes| O[Escalate to Practice Lead]
+    N -->|No| P[Continue Matching]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-38">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I5</span>
+      <span class="dd-card__title">#38 &mdash; Expense Policy Enforcement Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Validates expense entries against organizational policies in real-time—per diem limits, receipt requirements, category restrictions, and project-specific budgets—blocking non-compliant submissions with clear violation explanations.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Expense Line Created] --> B[Rule Resolver]
+    A2[Expense Report Submitted] --> B
+    A3[Receipt Uploaded] --> B
+    B --> C["Category / Location / Client Rules"]
+    C --> D[Amount Validator]
+    D --> E["Per Diem & Limit Check"]
+    E --> F[Receipt Checker]
+    F --> G{Receipt Required?}
+    G -->|Missing| H[Block + Alert]
+    G -->|Present| I[Budget Checker]
+    I --> J[Project Expense Cap]
+    J --> K[Anomaly Detector]
+    K --> L{Verdict}
+    L -->|Pass| M[Approve Entry]
+    L -->|Fail| N[Block with Reason]
+    L -->|Flag| O[Route for Review]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-50">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I6</span>
+      <span class="dd-card__title">#50 &mdash; Material Usage Tracking Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Monitors material consumption against estimates on projects using non-stocked materials, flags overuse or unauthorized materials, and maintains real-time material cost tracking.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Material Actual Recorded] --> B[Consumption Tracker]
+    A2[Purchase Order Receipt] --> B
+    B --> C[BOM Authorization Checker]
+    C --> D{Authorized Material?}
+    D -->|No| E[Flag Unauthorized]
+    D -->|Yes| F[Rate Analyzer vs Budget]
+    F --> G{Consumption Rate OK?}
+    G -->|Overuse| H[Overuse Alert]
+    G -->|Normal| I[Continue Tracking]
+    H --> J[Committed Cost Calculator]
+    I --> J
+    J --> K["Consumed + On-Order = Total Exposure"]
+    K --> L[Material Dashboard]
+    K --> M[PM Alert - Teams/Mobile]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-51">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I7</span>
+      <span class="dd-card__title">#51 &mdash; Subcontractor Performance Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Tracks subcontractor deliverables against contract terms, validates subcontractor time entries, monitors cost against budget, and flags performance issues including late deliveries and quality concerns.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Sub Time Submitted] --> D[Deliverable Tracker]
+    B[Milestone Due Date] --> D
+    C[Invoice Received] --> D
+    D --> E[Schedule Adherence Check]
+    E --> F[Cost & Hours Validator]
+    F --> G[Contracted Terms Check]
+    G --> H[Quality Scorer]
+    H --> I[Trend Detector]
+    I --> J{Performance Deteriorating?}
+    J -->|Yes| K[Critical Alert to PM]
+    J -->|No| L[Normal Monitoring]
+    K --> M[Composite Scorecard]
+    L --> M
+    M --> N[Performance Dashboard]
+    M --> O[Invoice Validation Report]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-69">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I8</span>
+      <span class="dd-card__title">#69 &mdash; Fixed-Price Milestone Billing Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Monitors fixed-price project milestone completion, validates deliverable acceptance criteria, auto-generates milestone billing transactions, and reconciles billed milestones against contract billing schedules.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[Milestone Status Changed] --> B[Completion Criteria Verifier]
+    A2[Deliverable Sign-Off] --> B
+    B --> C{All Criteria Met?}
+    C -->|No| D[Route for Completion]
+    C -->|Yes| E[Billing Schedule Validator]
+    E --> F[Contract Amount Check]
+    F --> G[Milestone Billing Generator]
+    G --> H[Retainer Drawdown Applied]
+    H --> I[Revenue Recognition Entry]
+    I --> J[Proforma Invoice Created]
+    J --> K[Finance Review Queue]
+    J --> L[Billing Pipeline Dashboard]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-70">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I9</span>
+      <span class="dd-card__title">#70 &mdash; Project Closeout Automation Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Orchestrates the project closeout process—final billing verification, WIP clearance, remaining budget release, resource release, lessons-learned capture, and financial archive—ensuring no residual financial exposure.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A["Project Status → Complete"] --> D[Checklist Generator]
+    B[Final Deliverable Accepted] --> D
+    C[Manual Closeout] --> D
+    D --> E[Time & Expense Verification]
+    E --> F{All Submitted & Approved?}
+    F -->|No| G[Send Reminders]
+    F -->|Yes| H[Final Billing & WIP Settlement]
+    H --> I[WIP Clearance Journals]
+    I --> J[Budget & Resource Release]
+    J --> K[Notify Resource Managers]
+    K --> L[Lessons Learned Capture]
+    L --> M[Financial Archive]
+    M --> N["Status → Closed"]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+<div class="dd-card" id="dd-72">
+  <details>
+    <summary class="dd-card__summary">
+      <span class="dd-card__badge badge--purple">I10</span>
+      <span class="dd-card__title">#72 &mdash; Portfolio Profitability Dashboard Agent</span>
+      <span class="dd-card__chevron">&#9660;</span>
+    </summary>
+    <div class="dd-card__body">
+      <div class="dd-section">
+        <h4>1. Executive Summary</h4>
+        <p>Aggregates financial performance data across the active project portfolio, ranks projects by profitability, identifies margin-eroding patterns, and generates executive-level portfolio health reports.</p>
+      </div>
+      <div class="dd-section">
+        <h4>2. Quantified Benefits &amp; ROI</h4>
+        
+        
+      </div>
+      <div class="dd-section">
+        <h4>3. Key User Stories</h4>
+        
+      </div>
+      <div class="dd-section">
+        <h4>4. Architecture</h4>
+        <pre class="mermaid">
+flowchart TD
+    A[msdyn_actual Revenue + Cost] --> D[Margin Calculator]
+    B[Project/Client Master Data] --> D
+    C[Pipeline & Backlog Data] --> D
+    D --> E["Gross & Net Margin"]
+    E --> F[Dimension Aggregator]
+    F --> G["By Client / Practice / Type / Region"]
+    G --> H[Erosion Attributor]
+    H --> I["Rate Dilution / Over-Servicing / Expense"]
+    I --> J[Trajectory Predictor]
+    J --> K[Azure ML Forecast]
+    K --> L[Narrative Generator - GPT]
+    L --> M[Executive Dashboard]
+    L --> N[Board P&L Report]
+    L --> O[Margin Erosion Analysis]
+        </pre>
+      </div>
+      <div class="dd-section">
+        <h4>5. Implementation Roadmap</h4>
+        
+      </div>
+    </div>
+  </details>
+</div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ AGENT CATALOG ============ -->
+<section class="section" id="catalog">
+  <div class="container">
+    <div class="section__header fade-in">
+      <span class="section__tag">Full Catalog</span>
+      <h2 class="section__title">All 80 Project Operations Agents</h2>
+      <p class="section__desc">Search, filter, and explore every agent. Highlighted rows link to detailed deep dives above.</p>
+    </div>
+    <div class="search-bar fade-in">
+      <input type="text" id="agentSearch" placeholder="Search agents by name, description, or trigger...">
+      <select id="areaFilter">
+        <option value="">All Areas</option>
+        <option value="Analytics & Reporting">Analytics & Reporting</option>
+<option value="Integration">Integration</option>
+<option value="Project Accounting & Billing">Project Accounting & Billing</option>
+<option value="Project Delivery">Project Delivery</option>
+<option value="Project Planning">Project Planning</option>
+<option value="Resource Management">Resource Management</option>
+<option value="Sales & Estimation">Sales & Estimation</option>
+<option value="Time & Expense">Time & Expense</option>
+      </select>
+    </div>
+    <div class="agent-table-wrapper fade-in">
+      <table class="agent-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Agent Name</th>
+            <th>Description</th>
+            <th>Module / Area</th>
+            <th>Trigger</th>
+          </tr>
+        </thead>
+        <tbody>
+<tr class="highlighted" data-area="Sales &amp; Estimation"><td>1</td><td><strong>Project Quote Line Estimator Agent</strong> <a href="#dd-1" class="badge badge--purple">I1 Deep Dive</a></td><td>Autonomously generates detailed quote line estimates by analyzing historical project data, team composition, and effort patterns to produce accurate cost and revenue estimates for new project-based quote lines.</td><td>Sales &amp; Estimation</td><td>Triggered on new project quote line creation or quote revision request</td></tr>
+<tr data-area="Sales &amp; Estimation"><td>2</td><td><strong>Quote-to-Contract Conversion Agent</strong></td><td>Validates all project quote details—pricing, resource estimates, terms, and contract structure—then automates the conversion of won quotes into project contracts with proper billing milestones and contract lines.</td><td>Sales &amp; Estimation</td><td>Triggered when project quote status changes to "Won"</td></tr>
+<tr data-area="Sales &amp; Estimation"><td>3</td><td><strong>Role-Based Pricing Optimization Agent</strong></td><td>Analyzes market rates, historical billing data, and utilization patterns to recommend optimal role-based pricing across organizational units, flagging underpriced or overpriced roles against benchmarks.</td><td>Sales &amp; Estimation</td><td>Scheduled quarterly or triggered on price list renewal cycle</td></tr>
+<tr data-area="Sales &amp; Estimation"><td>4</td><td><strong>Multi-Scenario Quote Modeling Agent</strong></td><td>Generates multiple pricing and staffing scenarios for a project quote (optimistic, most-likely, pessimistic), presenting trade-offs between margin, timeline, and risk for each option.</td><td>Sales &amp; Estimation</td><td>Triggered on quote creation for complex or high-value opportunities</td></tr>
+<tr data-area="Sales &amp; Estimation"><td>5</td><td><strong>Contract Amendment Compliance Agent</strong></td><td>Monitors project contracts for scope changes, tracks approved change orders, validates that amendment terms align with original contract structure, and ensures billing schedules are updated accordingly.</td><td>Sales &amp; Estimation</td><td>Triggered on contract amendment request or scope change approval</td></tr>
+<tr data-area="Sales &amp; Estimation"><td>6</td><td><strong>Contract Stage Gate Monitor Agent</strong></td><td>Monitors project contract lifecycle stages (draft → confirmed → completed) and alerts stakeholders when contracts remain in draft beyond a configurable threshold or when required approvals are pending.</td><td>Sales &amp; Estimation</td><td>Contract is created or a stage transition deadline is approaching</td></tr>
+<tr class="highlighted" data-area="Sales &amp; Estimation"><td>7</td><td><strong>Billing Method Advisor Agent</strong> <a href="#dd-7" class="badge badge--purple">I2 Deep Dive</a></td><td>Analyzes project scope, risk profile, and customer history to recommend the optimal billing method (T&M vs. fixed price) for each contract line, with justification and margin impact analysis.</td><td>Sales &amp; Estimation</td><td>New contract line is added or project scope is significantly modified</td></tr>
+<tr data-area="Sales &amp; Estimation"><td>8</td><td><strong>Expense Estimate Benchmarking Agent</strong></td><td>Analyzes historical expense data by project type, geography, and duration to auto-populate realistic expense estimates on quote lines, replacing manual guesswork with data-driven projections.</td><td>Sales &amp; Estimation</td><td>Triggered on new quote line creation requiring expense estimates</td></tr>
+<tr data-area="Sales &amp; Estimation"><td>9</td><td><strong>Contract Billing Schedule Generator Agent</strong></td><td>Automatically generates optimal billing schedules for project contracts based on billing method (T&M or fixed-price), milestone definitions, and cash flow preferences, ensuring revenue recognition alignment.</td><td>Sales &amp; Estimation</td><td>Triggered on contract confirmation or billing method selection</td></tr>
+<tr data-area="Sales &amp; Estimation"><td>10</td><td><strong>Pricing Anomaly Detection Agent</strong></td><td>Monitors all active price lists and transaction category pricing for anomalies—duplicate entries, expired rates, missing role prices, and inconsistencies across organizational units—and alerts pricing administrators.</td><td>Sales &amp; Estimation</td><td>Scheduled weekly or triggered on price list modification</td></tr>
+<tr data-area="Sales &amp; Estimation"><td>11</td><td><strong>Win/Loss Analysis Agent</strong></td><td>Analyzes won and lost project quotes to identify pricing patterns, competitive factors, and proposal characteristics that correlate with success, generating actionable insights for sales strategy refinement.</td><td>Sales &amp; Estimation</td><td>Triggered monthly or on-demand for pipeline review meetings</td></tr>
+<tr class="highlighted" data-area="Project Planning"><td>12</td><td><strong>WBS Auto-Generator Agent</strong> <a href="#dd-12" class="badge badge--blue">H1 Deep Dive</a></td><td>Generates a draft Work Breakdown Structure from project scope descriptions, SOW documents, or natural language input, creating tasks, dependencies, and milestones automatically.</td><td>Project Planning</td><td>New project is created from a confirmed contract or user requests WBS generation</td></tr>
+<tr data-area="Project Planning"><td>13</td><td><strong>Task Dependency Optimizer Agent</strong></td><td>Scans the project WBS for missing dependencies, circular references, and suboptimal sequencing, then recommends dependency adjustments to shorten the critical path and reduce scheduling risk.</td><td>Project Planning</td><td>Triggered on WBS modification or scheduled before project kickoff</td></tr>
+<tr data-area="Project Planning"><td>14</td><td><strong>Schedule Risk Assessment Agent</strong></td><td>Analyzes the project schedule for risks including resource overallocation, dependency bottlenecks, unrealistic durations based on historical data, and insufficient float on critical paths.</td><td>Project Planning</td><td>Triggered on schedule baseline or major schedule update</td></tr>
+<tr data-area="Project Planning"><td>15</td><td><strong>Milestone Planning Agent</strong></td><td>Automatically identifies optimal milestone placement within the WBS based on deliverable dependencies, client review points, and billing schedule alignment, ensuring milestones are actionable and measurable.</td><td>Project Planning</td><td>Triggered on WBS completion or billing schedule definition</td></tr>
+<tr data-area="Project Planning"><td>16</td><td><strong>Critical Path Monitoring Agent</strong></td><td>Continuously monitors the critical path during project execution, alerts project managers when tasks on or near the critical path slip, and recommends mitigation actions such as resource reallocation or task fast-tracking.</td><td>Project Planning</td><td>Triggered on task progress update or daily scheduled scan</td></tr>
+<tr data-area="Project Planning"><td>17</td><td><strong>Effort Estimation Calibration Agent</strong></td><td>Compares planned effort per task against actual effort from completed similar tasks across the portfolio, providing data-driven effort calibration recommendations to improve estimation accuracy.</td><td>Project Planning</td><td>Triggered on task effort entry or during project planning phase</td></tr>
+<tr data-area="Project Planning"><td>18</td><td><strong>Project Scheduling Conflict Agent</strong></td><td>Detects scheduling conflicts across the project portfolio—resource double-booking, overlapping dependent projects, and shared milestone date conflicts—and proposes resolution alternatives.</td><td>Project Planning</td><td>Triggered on schedule publication or resource assignment changes</td></tr>
+<tr data-area="Project Planning"><td>19</td><td><strong>WBS Completeness Validation Agent</strong></td><td>Validates that the WBS meets organizational standards for completeness: all tasks have assignments, effort estimates, dependencies, and appropriate hierarchy depth before allowing schedule baselining.</td><td>Project Planning</td><td>Triggered on WBS submission for baseline approval</td></tr>
+<tr data-area="Project Planning"><td>20</td><td><strong>Project Plan Versioning Agent</strong></td><td>Automatically captures and compares project plan versions, highlighting changes in scope, timeline, and effort between baselines, and generating variance reports for stakeholder communication.</td><td>Project Planning</td><td>Triggered on schedule re-baseline or significant plan modification</td></tr>
+<tr data-area="Project Planning"><td>21</td><td><strong>Project Template Recommender Agent</strong></td><td>Recommends the most suitable project template based on project type, industry, estimated size, and contractual requirements, ranking templates by historical success rate and relevance.</td><td>Project Planning</td><td>New project creation is initiated from a confirmed contract</td></tr>
+<tr data-area="Project Planning"><td>22</td><td><strong>Template Drift Detector Agent</strong></td><td>Compares active projects against their source templates to identify structural deviations, helping organizations track where and why projects diverge from delivery standards.</td><td>Project Planning</td><td>Periodic review cycle or WBS modification on a template-derived project</td></tr>
+<tr class="highlighted" data-area="Resource Management"><td>23</td><td><strong>Resource Demand Forecasting Agent</strong> <a href="#dd-23" class="badge badge--purple">I3 Deep Dive</a></td><td>Analyzes the project pipeline, confirmed contracts, and historical demand patterns to forecast resource demand by role, skill, and organizational unit over configurable time horizons (30/60/90 days).</td><td>Resource Management</td><td>Scheduled weekly or triggered on significant pipeline changes</td></tr>
+<tr class="highlighted" data-area="Resource Management"><td>24</td><td><strong>Skill-Based Resource Matching Agent</strong> <a href="#dd-24" class="badge badge--blue">H2 Deep Dive</a></td><td>Matches open resource requirements against the resource pool using multi-criteria analysis of skills, certifications, availability, location, and past performance to recommend optimal resource assignments.</td><td>Resource Management</td><td>Triggered on resource requirement creation or staffing request</td></tr>
+<tr class="highlighted" data-area="Resource Management"><td>25</td><td><strong>Resource Utilization Optimization Agent</strong> <a href="#dd-25" class="badge badge--blue">H3 Deep Dive</a></td><td>Monitors resource utilization rates across the organization, identifies underutilized and overutilized resources, and recommends rebalancing actions including reassignment, bench management, and training investments.</td><td>Resource Management</td><td>Scheduled daily or triggered when utilization crosses configurable thresholds</td></tr>
+<tr data-area="Resource Management"><td>26</td><td><strong>Booking Conflict Resolution Agent</strong></td><td>Detects hard and soft booking conflicts where resources are double-booked across projects, evaluates project priority and contractual obligations, and proposes resolution options ranked by business impact.</td><td>Resource Management</td><td>Triggered on new booking creation or detected booking overlap</td></tr>
+<tr data-area="Resource Management"><td>27</td><td><strong>Resource Request Fulfillment Agent</strong></td><td>Processes incoming resource requests by matching requirements against available resources, generating ranked candidate lists, and routing assignment proposals to resource managers for approval.</td><td>Resource Management</td><td>Triggered on resource request submission</td></tr>
+<tr data-area="Resource Management"><td>28</td><td><strong>Capacity Planning Agent</strong></td><td>Builds forward-looking capacity models by comparing confirmed resource supply against demand from active projects and pipeline, identifying capacity gaps by role and time period.</td><td>Resource Management</td><td>Scheduled weekly or triggered on portfolio changes</td></tr>
+<tr data-area="Resource Management"><td>29</td><td><strong>Soft-to-Hard Booking Converter Agent</strong></td><td>Monitors soft bookings approaching their project start dates and prompts resource managers to confirm or convert them to hard bookings before deadline, preventing staffing gaps.</td><td>Resource Management</td><td>Soft booking exists within configurable days of project/task start date</td></tr>
+<tr class="highlighted" data-area="Resource Management"><td>30</td><td><strong>Bench Management Agent</strong> <a href="#dd-30" class="badge badge--purple">I4 Deep Dive</a></td><td>Monitors unassigned resources (bench), matches their skills against upcoming project needs, recommends training or internal project assignments, and alerts managers when bench time exceeds organizational thresholds.</td><td>Resource Management</td><td>Scheduled daily or triggered when resource becomes unassigned</td></tr>
+<tr data-area="Resource Management"><td>31</td><td><strong>Resource Reconciliation Agent</strong></td><td>Compares resource bookings against actual task assignments and time entries, identifies discrepancies between planned and actual resource usage, and recommends booking adjustments to reflect reality.</td><td>Resource Management</td><td>Scheduled weekly or triggered on time entry approval</td></tr>
+<tr data-area="Resource Management"><td>32</td><td><strong>Intercompany Resource Sharing Agent</strong></td><td>Identifies resource needs that cannot be fulfilled within the local organizational unit and searches across intercompany resource pools, managing the intercompany billing and transfer pricing logistics.</td><td>Resource Management</td><td>Triggered when local resource search yields no matches</td></tr>
+<tr data-area="Resource Management"><td>33</td><td><strong>Resource Skill Gap Analysis Agent</strong></td><td>Analyzes upcoming project demand against current team capabilities, identifies emerging skill gaps, and recommends targeted training, hiring, or subcontracting strategies to address capability shortfalls.</td><td>Resource Management</td><td>Scheduled quarterly or triggered on pipeline review</td></tr>
+<tr data-area="Resource Management"><td>34</td><td><strong>Team Staffing Balancer Agent</strong></td><td>Optimizes team composition across concurrent projects to balance workload, skill coverage, and team continuity while minimizing context-switching and maximizing delivery efficiency.</td><td>Resource Management</td><td>New project staffing request or periodic team balance review</td></tr>
+<tr class="highlighted" data-area="Time &amp; Expense"><td>35</td><td><strong>Intelligent Time Entry Suggestion Agent</strong> <a href="#dd-35" class="badge badge--blue">H4 Deep Dive</a></td><td>Pre-populates weekly time entry grids based on resource bookings, recent time entry patterns, scheduled meetings, and project task assignments, reducing manual data entry effort for consultants.</td><td>Time &amp; Expense</td><td>Triggered on weekly time entry grid opening</td></tr>
+<tr data-area="Time &amp; Expense"><td>36</td><td><strong>Time Entry Compliance Monitor Agent</strong></td><td>Monitors timesheet submission rates across the organization, identifies non-compliant resources, sends automated reminders at escalating urgency levels, and reports compliance metrics to management.</td><td>Time &amp; Expense</td><td>Scheduled daily with escalation on submission deadlines</td></tr>
+<tr data-area="Time &amp; Expense"><td>37</td><td><strong>Time Approval Workflow Optimizer Agent</strong></td><td>Analyzes time approval bottlenecks, identifies approvers with backlogs, auto-routes approvals to delegates when primary approvers are unavailable, and flags time entries requiring special attention.</td><td>Time &amp; Expense</td><td>Triggered on time entry submission or approval queue threshold</td></tr>
+<tr class="highlighted" data-area="Time &amp; Expense"><td>38</td><td><strong>Expense Policy Enforcement Agent</strong> <a href="#dd-38" class="badge badge--purple">I5 Deep Dive</a></td><td>Validates expense entries against organizational policies in real-time—per diem limits, receipt requirements, category restrictions, and project-specific budgets—blocking non-compliant submissions with clear violation explanations.</td><td>Time &amp; Expense</td><td>Triggered on expense entry creation or submission</td></tr>
+<tr data-area="Time &amp; Expense"><td>39</td><td><strong>Receipt Digitization Agent</strong></td><td>Processes uploaded expense receipts using OCR and AI extraction, auto-populates expense line details (amount, vendor, date, category), validates against policy, and flags discrepancies between receipt and entry.</td><td>Time &amp; Expense</td><td>Triggered on receipt upload or photo capture</td></tr>
+<tr data-area="Time &amp; Expense"><td>40</td><td><strong>Mileage and Per Diem Calculator Agent</strong></td><td>Automatically calculates mileage reimbursement and per diem allowances based on travel itinerary, organizational rates, and government guidelines, pre-populating expense reports with accurate amounts.</td><td>Time &amp; Expense</td><td>Triggered on travel booking or expense report creation for travel projects</td></tr>
+<tr data-area="Time &amp; Expense"><td>41</td><td><strong>Expense Report Audit Agent</strong></td><td>Performs comprehensive audit of submitted expense reports—checking for duplicate expenses across reports, split transactions to circumvent approval limits, unusual spending patterns, and policy violations.</td><td>Time &amp; Expense</td><td>Triggered on expense report submission or scheduled batch audit</td></tr>
+<tr data-area="Time &amp; Expense"><td>42</td><td><strong>Intercompany Expense Routing Agent</strong></td><td>Identifies expenses incurred on intercompany projects, automatically determines the correct billing entity and transfer pricing, and routes expense entries through intercompany settlement workflows.</td><td>Time &amp; Expense</td><td>Triggered on expense entry for intercompany project</td></tr>
+<tr data-area="Time &amp; Expense"><td>43</td><td><strong>Non-Project Time Analysis Agent</strong></td><td>Tracks and categorizes non-project time entries (training, admin, internal meetings, bench), identifies trends and excessive non-billable time consumption, and provides utilization impact analysis.</td><td>Time &amp; Expense</td><td>Scheduled weekly or triggered on non-project time threshold breach</td></tr>
+<tr data-area="Time &amp; Expense"><td>44</td><td><strong>Time Entry Correction Agent</strong></td><td>Identifies time entries posted to incorrect projects, tasks, or billing categories based on pattern analysis and project context, proposes corrections, and manages the recall-and-resubmit workflow.</td><td>Time &amp; Expense</td><td>Triggered on anomalous time entry detection or project manager review</td></tr>
+<tr data-area="Time &amp; Expense"><td>45</td><td><strong>Recall and Edit Assistant Agent</strong></td><td>Streamlines the time entry recall process by guiding users through corrections, prepopulating adjustment entries, and resubmitting with change annotations for full audit trail.</td><td>Time &amp; Expense</td><td>User initiates a recall of previously approved time entries</td></tr>
+<tr data-area="Time &amp; Expense"><td>46</td><td><strong>Bulk Approval Prioritizer Agent</strong></td><td>Prioritizes the time approval queue by highlighting entries approaching billing cutoff dates, flagging anomalous entries, and enabling intelligent bulk approve for routine submissions.</td><td>Time &amp; Expense</td><td>Approver opens the time approval view or billing deadline approaches</td></tr>
+<tr data-area="Time &amp; Expense"><td>47</td><td><strong>Duplicate Expense Detector Agent</strong></td><td>Uses AI to identify potential duplicate expense entries across expense reports by comparing dates, amounts, vendors, and receipt images, preventing double reimbursement.</td><td>Time &amp; Expense</td><td>Expense report is submitted or periodic duplicate scan runs</td></tr>
+<tr data-area="Project Delivery"><td>48</td><td><strong>Task Progress Tracking Agent</strong></td><td>Monitors task completion percentages, effort consumed versus remaining, and pace of progress, alerting project managers when tasks are trending behind schedule with root-cause analysis and recommended interventions.</td><td>Project Delivery</td><td>Triggered on task update or scheduled daily scan</td></tr>
+<tr class="highlighted" data-area="Project Delivery"><td>49</td><td><strong>Actuals vs. Estimate Variance Agent</strong> <a href="#dd-49" class="badge badge--blue">H5 Deep Dive</a></td><td>Continuously compares actual costs and effort against project estimates, identifies variances exceeding configurable thresholds, and generates variance analysis reports with contributing factor breakdowns.</td><td>Project Delivery</td><td>Triggered on actuals posting or scheduled weekly</td></tr>
+<tr class="highlighted" data-area="Project Delivery"><td>50</td><td><strong>Material Usage Tracking Agent</strong> <a href="#dd-50" class="badge badge--purple">I6 Deep Dive</a></td><td>Monitors material consumption against estimates on projects using non-stocked materials, flags overuse or unauthorized materials, and maintains real-time material cost tracking.</td><td>Project Delivery</td><td>Triggered on material actual recording or purchase order receipt</td></tr>
+<tr class="highlighted" data-area="Project Delivery"><td>51</td><td><strong>Subcontractor Performance Agent</strong> <a href="#dd-51" class="badge badge--purple">I7 Deep Dive</a></td><td>Tracks subcontractor deliverables against contract terms, validates subcontractor time entries, monitors cost against budget, and flags performance issues including late deliveries and quality concerns.</td><td>Project Delivery</td><td>Triggered on subcontractor time submission or milestone due date</td></tr>
+<tr class="highlighted" data-area="Project Delivery"><td>52</td><td><strong>Scope Creep Detection Agent</strong> <a href="#dd-52" class="badge badge--blue">H6 Deep Dive</a></td><td>Monitors project actuals, change requests, and task additions against the original baseline, quantifying scope creep in terms of effort, cost, and timeline impact, and recommending corrective actions.</td><td>Project Delivery</td><td>Triggered on new task addition, effort increase, or change request</td></tr>
+<tr data-area="Project Delivery"><td>53</td><td><strong>Project Risk Identification Agent</strong></td><td>Scans project data patterns—budget burn rate, schedule slippage, resource turnover, client communication frequency—to proactively identify at-risk projects before issues become critical.</td><td>Project Delivery</td><td>Scheduled daily or triggered on metric threshold breach</td></tr>
+<tr data-area="Project Delivery"><td>54</td><td><strong>Deliverable Quality Gate Agent</strong></td><td>Enforces quality gate criteria at project milestones—required documentation, sign-offs, test results, and acceptance criteria—blocking milestone completion until all gates are satisfied.</td><td>Project Delivery</td><td>Triggered on milestone status change to "Complete"</td></tr>
+<tr data-area="Project Delivery"><td>55</td><td><strong>Change Order Impact Assessment Agent</strong></td><td>Analyzes the financial, schedule, and resource impact of proposed project change orders, generating impact reports that support informed decision-making before change order approval.</td><td>Project Delivery</td><td>Triggered on change order request submission</td></tr>
+<tr data-area="Project Delivery"><td>56</td><td><strong>Vendor Invoice Matcher Agent</strong></td><td>Automatically matches vendor invoices against subcontract lines, verifying rates, quantities, and approved time entries before recommending payment approval.</td><td>Project Delivery</td><td>Vendor invoice is received or subcontractor submits deliverables</td></tr>
+<tr data-area="Project Delivery"><td>57</td><td><strong>Project Journal Validation Agent</strong></td><td>Validates project journal lines for correct project, task, transaction category, and financial dimension coding before posting, catching data entry errors that would impact project financials.</td><td>Project Delivery</td><td>Triggered on project journal line creation or batch posting</td></tr>
+<tr class="highlighted" data-area="Project Accounting &amp; Billing"><td>58</td><td><strong>Proforma Invoice Generation Agent</strong> <a href="#dd-58" class="badge badge--blue">H7 Deep Dive</a></td><td>Automatically generates proforma invoices based on approved time and expense actuals (T&M) or completed milestones (fixed-price), applying correct rates, markups, and contract terms.</td><td>Project Accounting &amp; Billing</td><td>Triggered on billing cycle date or milestone completion</td></tr>
+<tr data-area="Project Accounting &amp; Billing"><td>59</td><td><strong>Invoice Accuracy Validation Agent</strong></td><td>Cross-validates proforma invoices against contract terms, approved actuals, billing schedules, and rate cards before confirmation, catching billing errors and ensuring contractual compliance.</td><td>Project Accounting &amp; Billing</td><td>Triggered on proforma invoice creation or before invoice confirmation</td></tr>
+<tr class="highlighted" data-area="Project Accounting &amp; Billing"><td>60</td><td><strong>Revenue Recognition Automation Agent</strong> <a href="#dd-60" class="badge badge--blue">H8 Deep Dive</a></td><td>Calculates and posts revenue recognition entries based on percentage-of-completion or estimate-at-completion methods, maintaining ASC 606/IFRS 15 compliance across the project portfolio.</td><td>Project Accounting &amp; Billing</td><td>Triggered at period end or on configurable revenue recognition schedule</td></tr>
+<tr data-area="Project Accounting &amp; Billing"><td>61</td><td><strong>WIP Calculation and Monitoring Agent</strong></td><td>Performs Work-in-Progress calculations for active projects, identifies WIP buildup anomalies, and provides aging analysis of unbilled WIP with recommendations for conversion to revenue or write-off.</td><td>Project Accounting &amp; Billing</td><td>Triggered at period close or scheduled weekly</td></tr>
+<tr class="highlighted" data-area="Project Accounting &amp; Billing"><td>62</td><td><strong>Project Budget vs. Actuals Agent</strong> <a href="#dd-62" class="badge badge--blue">H9 Deep Dive</a></td><td>Continuously tracks project budget consumption against approved budgets, provides time-phased burn-rate analysis, and alerts project managers when budget consumption trends predict overruns.</td><td>Project Accounting &amp; Billing</td><td>Triggered on actuals posting or scheduled daily</td></tr>
+<tr data-area="Project Accounting &amp; Billing"><td>63</td><td><strong>Cost Variance Analysis Agent</strong></td><td>Analyzes cost variances by category (labor, expense, material, subcontracting), identifies root causes of variance, and generates cost control recommendations with projected financial impact.</td><td>Project Accounting &amp; Billing</td><td>Triggered when cost variance exceeds configurable thresholds</td></tr>
+<tr data-area="Project Accounting &amp; Billing"><td>64</td><td><strong>Committed Cost Tracking Agent</strong></td><td>Monitors committed costs from approved purchase orders, subcontracts, and resource bookings that have not yet been invoiced or recorded as actuals, providing total project cost exposure visibility.</td><td>Project Accounting &amp; Billing</td><td>Triggered on PO approval, subcontract confirmation, or resource booking</td></tr>
+<tr data-area="Project Accounting &amp; Billing"><td>65</td><td><strong>Project GL Posting Validation Agent</strong></td><td>Validates project subledger-to-GL posting rules, ensures financial dimensions are correctly derived from project attributes, and reconciles project subledger balances to GL control accounts.</td><td>Project Accounting &amp; Billing</td><td>Triggered on project posting batch or scheduled daily</td></tr>
+<tr data-area="Project Accounting &amp; Billing"><td>66</td><td><strong>Billing Rate Audit Agent</strong></td><td>Audits billed rates against contracted rates for T&M projects, identifies rate discrepancies, unauthorized rate overrides, and unbilled rate changes, ensuring billing integrity across the portfolio.</td><td>Project Accounting &amp; Billing</td><td>Scheduled monthly or triggered on invoice generation</td></tr>
+<tr data-area="Project Accounting &amp; Billing"><td>67</td><td><strong>Project Period Close Readiness Agent</strong></td><td>Monitors all prerequisites for project-specific period close—pending time approvals, unposted journals, open expense reports, unbilled WIP—and provides a dynamic checklist with auto-resolution of common blockers.</td><td>Project Accounting &amp; Billing</td><td>Triggered at configurable days before period-end date</td></tr>
+<tr data-area="Project Accounting &amp; Billing"><td>68</td><td><strong>Retainer and Prepayment Management Agent</strong></td><td>Tracks client retainer balances, automatically applies retainer drawdowns against approved invoices, alerts when retainers are depleted or approaching threshold, and triggers retainer replenishment requests.</td><td>Project Accounting &amp; Billing</td><td>Triggered on invoice confirmation or retainer balance threshold</td></tr>
+<tr class="highlighted" data-area="Project Accounting &amp; Billing"><td>69</td><td><strong>Fixed-Price Milestone Billing Agent</strong> <a href="#dd-69" class="badge badge--purple">I8 Deep Dive</a></td><td>Monitors fixed-price project milestone completion, validates deliverable acceptance criteria, auto-generates milestone billing transactions, and reconciles billed milestones against contract billing schedules.</td><td>Project Accounting &amp; Billing</td><td>Triggered on milestone status change or deliverable sign-off</td></tr>
+<tr class="highlighted" data-area="Project Accounting &amp; Billing"><td>70</td><td><strong>Project Closeout Automation Agent</strong> <a href="#dd-70" class="badge badge--purple">I9 Deep Dive</a></td><td>Orchestrates the project closeout process—final billing verification, WIP clearance, remaining budget release, resource release, lessons-learned capture, and financial archive—ensuring no residual financial exposure.</td><td>Project Accounting &amp; Billing</td><td>Triggered on project status change to "Complete" or final deliverable acceptance</td></tr>
+<tr data-area="Project Accounting &amp; Billing"><td>71</td><td><strong>Invoice Dispute Resolution Agent</strong></td><td>Tracks customer invoice disputes, links them to source transactions, and facilitates resolution by surfacing supporting documentation and suggesting adjustments or credit notes.</td><td>Project Accounting &amp; Billing</td><td>Customer raises an invoice dispute or payment is withheld</td></tr>
+<tr class="highlighted" data-area="Analytics &amp; Reporting"><td>72</td><td><strong>Portfolio Profitability Dashboard Agent</strong> <a href="#dd-72" class="badge badge--purple">I10 Deep Dive</a></td><td>Aggregates financial performance data across the active project portfolio, ranks projects by profitability, identifies margin-eroding patterns, and generates executive-level portfolio health reports.</td><td>Analytics &amp; Reporting</td><td>Scheduled weekly or triggered on-demand for leadership reviews</td></tr>
+<tr data-area="Analytics &amp; Reporting"><td>73</td><td><strong>Resource Utilization Analytics Agent</strong></td><td>Calculates and trends billable utilization, total utilization, and productive utilization rates by resource, team, and organizational unit, benchmarking against targets and identifying improvement opportunities.</td><td>Analytics &amp; Reporting</td><td>Scheduled weekly or triggered on timesheet approval cycle completion</td></tr>
+<tr class="highlighted" data-area="Analytics &amp; Reporting"><td>74</td><td><strong>Revenue Leakage Detection Agent</strong> <a href="#dd-74" class="badge badge--blue">H10 Deep Dive</a></td><td>Identifies unbilled approved time and expenses, expired unused contract values, under-billed rate card discrepancies, and missed billing milestones to quantify and recover revenue leakage.</td><td>Analytics &amp; Reporting</td><td>Scheduled weekly or triggered on billing cycle review</td></tr>
+<tr data-area="Analytics &amp; Reporting"><td>75</td><td><strong>Project Pipeline Revenue Forecasting Agent</strong></td><td>Analyzes the sales pipeline weighted by probability, converts pipeline opportunities into projected revenue streams by period, and provides sensitivity analysis on forecast assumptions.</td><td>Analytics &amp; Reporting</td><td>Scheduled monthly or triggered on pipeline stage changes</td></tr>
+<tr data-area="Analytics &amp; Reporting"><td>76</td><td><strong>Client Profitability Analysis Agent</strong></td><td>Calculates total profitability by client across all active and completed projects, factoring in direct costs, allocated overhead, and revenue, to identify the most and least profitable client relationships.</td><td>Analytics &amp; Reporting</td><td>Scheduled quarterly or triggered on client portfolio review</td></tr>
+<tr data-area="Analytics &amp; Reporting"><td>77</td><td><strong>Project P&L Report Generator Agent</strong></td><td>Automatically generates project-level profit and loss reports with comparisons against budget, prior periods, and peer projects, including narrative commentary on key variances.</td><td>Analytics &amp; Reporting</td><td>Period-end close or project manager requests financial summary</td></tr>
+<tr data-area="Analytics &amp; Reporting"><td>78</td><td><strong>Profitability Trend Analyzer Agent</strong></td><td>Analyzes project profitability trends across portfolio, customer, and project type dimensions, identifying underperforming segments and recommending corrective actions.</td><td>Analytics &amp; Reporting</td><td>Monthly profitability analysis cycle or margin drops below threshold</td></tr>
+<tr data-area="Analytics &amp; Reporting"><td>79</td><td><strong>Project Financial Forecast Agent</strong></td><td>Generates estimate-at-completion forecasts combining actuals-to-date with remaining effort and cost projections, enabling proactive margin management and client communication on fixed-price projects.</td><td>Analytics &amp; Reporting</td><td>Scheduled weekly or triggered on significant actuals variance</td></tr>
+<tr data-area="Integration"><td>80</td><td><strong>Dual-Write Sync Monitor Agent</strong></td><td>Monitors dual-write synchronization between Project Operations and Finance, detecting sync failures, data conflicts, and latency issues with automated retry and alert escalation.</td><td>Integration</td><td>Dual-write sync event fails or periodic health check runs</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2025 Microsoft Corporation &mdash; D365 Agentic AI Cases &mdash; Project Operations</p>
+  </div>
+</footer>
+<button class="scroll-top" aria-label="Scroll to top">&#8679;</button>
+
+<script src="shared.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const areaLabels = ["Project Accounting & Billing", "Time & Expense", "Resource Management", "Sales & Estimation", "Project Planning", "Project Delivery", "Analytics & Reporting", "Integration"];
+  const areaData = [14, 13, 12, 11, 11, 10, 8, 1];
+  const palette = ['#0078D4','#6B2FA0','#00B294','#107C10','#FF8C00','#D13438','#FFB900','#E3008C','#003A6C','#84CC16','#06B6D4'];
+
+  // Bar chart
+  const barCtx = document.getElementById('areaBarChart');
+  if (barCtx) {
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: areaLabels,
+        datasets: [{
+          label: 'Number of Agents',
+          data: areaData,
+          backgroundColor: palette.slice(0, areaLabels.length),
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 2 } },
+          x: { ticks: { maxRotation: 45, minRotation: 25, font: { size: 11 } } }
+        }
+      }
+    });
+  }
+
+  // Doughnut chart
+  const doughCtx = document.getElementById('areaDoughnut');
+  if (doughCtx) {
+    new Chart(doughCtx, {
+      type: 'doughnut',
+      data: {
+        labels: areaLabels,
+        datasets: [{
+          data: areaData,
+          backgroundColor: palette.slice(0, areaLabels.length),
+          borderWidth: 2,
+          borderColor: '#fff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'right', labels: { font: { size: 11 }, padding: 10, boxWidth: 14 } }
+        }
+      }
+    });
+  }
+});
+</script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+  // Render mermaid diagrams when details are opened
+  document.querySelectorAll('details').forEach(d => {
+    d.addEventListener('toggle', () => {
+      if (d.open) {
+        d.querySelectorAll('pre.mermaid:not([data-processed])').forEach(el => {
+          el.setAttribute('data-processed', 'true');
+          mermaid.run({ nodes: [el] });
+        });
+      }
+    });
+  });
+  // Also render any initially open
+  mermaid.run();
+</script>
+</body>
+</html>

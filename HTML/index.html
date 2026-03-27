@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D365 Agentic Cases — 1,001 AI Agents Transforming Enterprise</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<nav class="top-nav">
+  <div class="container">
+    <a href="index.html" class="top-nav__brand">
+      <img src="../images/microsoft-logo-white.png" alt="Microsoft">
+      D365 Agentic Cases
+    </a>
+    <div class="top-nav__links">
+      <a href="index.html" class="active">Overview</a>
+      <a href="finance.html">Finance</a>
+      <a href="scm.html">Supply Chain</a>
+      <a href="sales.html">Sales</a>
+      <a href="customer-service.html">Customer Service</a>
+      <a href="field-service.html">Field Service</a>
+      <a href="commerce.html">Commerce</a>
+      <a href="hr.html">Human Resources</a>
+      <a href="project-ops.html">Project Ops</a>
+      <a href="customer-insights.html">Customer Insights</a>
+      <a href="cross-app.html">Cross-App</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero__bg" style="background-image:url('../images/hero-finance.jpg')"></div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <img src="../images/Dynamics365_scalable.svg" alt="Dynamics 365" class="hero__logo">
+    <h1 class="hero__title">1,001 AI Agents Transforming Dynamics 365</h1>
+    <p class="hero__subtitle">
+      A comprehensive catalog of autonomous AI agents spanning every Dynamics 365 module — from Finance and Supply Chain to Customer Insights and Cross-Platform orchestration. Each agent is designed to automate complex business processes, reduce manual effort, and drive measurable ROI.
+    </p>
+    <div class="hero__stats">
+      <div class="hero__stat">
+        <span class="hero__stat-number">1,001</span>
+        <span class="hero__stat-label">AI Agents</span>
+      </div>
+      <div class="hero__stat">
+        <span class="hero__stat-number">10</span>
+        <span class="hero__stat-label">D365 Modules</span>
+      </div>
+      <div class="hero__stat">
+        <span class="hero__stat-number">220</span>
+        <span class="hero__stat-label">Deep-Dive Cases</span>
+      </div>
+      <div class="hero__stat">
+        <span class="hero__stat-number">20+</span>
+        <span class="hero__stat-label">Industries</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INTRO SECTION ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__header fade-in">
+      <span class="section__tag">The Agentic Revolution</span>
+      <h2 class="section__title">How AI Agents Are Changing the Landscape</h2>
+      <p class="section__desc">
+        Enterprise applications are evolving from passive record systems to proactive, intelligent ecosystems. AI agents don't just respond — they observe, decide, and act autonomously.
+      </p>
+    </div>
+    <div class="card-grid fade-in" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      <div class="card">
+        <div class="card__body" style="padding:28px;">
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:10px; color:var(--ms-blue);">🤖 Autonomous Execution</h3>
+          <p>Agents continuously monitor business processes and take action without human intervention — from reordering inventory to flagging compliance risks.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__body" style="padding:28px;">
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:10px; color:var(--ms-purple);">🔗 Cross-Module Orchestration</h3>
+          <p>Unlike siloed automation, agents span Finance, SCM, Sales, and more — orchestrating end-to-end processes like Order-to-Cash or Hire-to-Retire.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__body" style="padding:28px;">
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:10px; color:var(--ms-teal);">📊 Continuous Learning</h3>
+          <p>Every agent includes feedback loops — learning from outcomes to improve predictions, decisions, and recommendations over time.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__body" style="padding:28px;">
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:10px; color:var(--ms-green);">⚡ Measurable ROI</h3>
+          <p>Each agent is designed with quantified business cases — from 15-25% cost reductions to 30-40% efficiency gains — with clear implementation timelines.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHARTS SECTION ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section__header fade-in">
+      <span class="section__tag">By the Numbers</span>
+      <h2 class="section__title">Agent Distribution Across D365</h2>
+    </div>
+    <div class="chart-row fade-in">
+      <div class="chart-container" style="height:400px;">
+        <div class="chart-container__title">Agents by Module</div>
+        <canvas id="moduleBarChart"></canvas>
+      </div>
+      <div class="chart-container" style="height:400px;">
+        <div class="chart-container__title">Portfolio Composition</div>
+        <canvas id="moduleDoughnut"></canvas>
+      </div>
+    </div>
+    <div class="chart-row fade-in" style="margin-top:24px;">
+      <div class="chart-container" style="height:400px;">
+        <div class="chart-container__title">Agents by Business Function</div>
+        <canvas id="functionRadar"></canvas>
+      </div>
+      <div class="chart-container" style="height:400px;">
+        <div class="chart-container__title">Horizontal vs. Industry-Aligned Deep Dives</div>
+        <canvas id="horzIndChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULE CARDS ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__header fade-in">
+      <span class="section__tag">Explore Modules</span>
+      <h2 class="section__title">Dynamics 365 Module Deep Dives</h2>
+      <p class="section__desc">Click any module to explore its AI agents, detailed use cases, architecture diagrams, and implementation roadmaps.</p>
+    </div>
+
+    <div class="card-grid card-grid--3 fade-in">
+
+      <!-- Finance -->
+      <a href="finance.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/Finance_scalable.svg" alt="Finance" class="card__icon">
+          <div class="card__title">Finance</div>
+        </div>
+        <div class="card__body"><p>General ledger, budgeting, AP/AR, tax, fixed assets, financial reporting, and compliance automation.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">125</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--blue">20 Deep Dives</span>
+        </div>
+      </a>
+
+      <!-- SCM -->
+      <a href="scm.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/SupplyChainManagement_scalable.svg" alt="SCM" class="card__icon">
+          <div class="card__title">Supply Chain Management</div>
+        </div>
+        <div class="card__body"><p>Procurement, warehouse management, master planning, transportation, production, quality, and inventory optimization.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">146</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--teal">20 Deep Dives</span>
+        </div>
+      </a>
+
+      <!-- Sales -->
+      <a href="sales.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/Sales_scalable.svg" alt="Sales" class="card__icon">
+          <div class="card__title">Sales</div>
+        </div>
+        <div class="card__body"><p>Lead scoring, opportunity management, forecasting, conversation intelligence, and relationship analytics.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">68</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--purple">20 Deep Dives</span>
+        </div>
+      </a>
+
+      <!-- Customer Service -->
+      <a href="customer-service.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/CustomerServices_scalable.svg" alt="Customer Service" class="card__icon">
+          <div class="card__title">Customer Service</div>
+        </div>
+        <div class="card__body"><p>Omnichannel support, case management, knowledge base, SLA enforcement, Copilot, and sentiment analysis.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">85</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--green">20 Deep Dives</span>
+        </div>
+      </a>
+
+      <!-- Field Service -->
+      <a href="field-service.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/FieldService_scalable.svg" alt="Field Service" class="card__icon">
+          <div class="card__title">Field Service</div>
+        </div>
+        <div class="card__body"><p>Work orders, scheduling optimization, IoT-connected service, inspections, predictive maintenance, and mobile workforce.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">75</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--blue">20 Deep Dives</span>
+        </div>
+      </a>
+
+      <!-- Commerce -->
+      <a href="commerce.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/Commerce_scalable.svg" alt="Commerce" class="card__icon">
+          <div class="card__title">Commerce</div>
+        </div>
+        <div class="card__body"><p>Omnichannel retail, distributed order management, merchandising, pricing, loyalty programs, and e-commerce.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">95</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--teal">20 Deep Dives</span>
+        </div>
+      </a>
+
+      <!-- HR -->
+      <a href="hr.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/HumanResources_scalable.svg" alt="Human Resources" class="card__icon">
+          <div class="card__title">Human Resources</div>
+        </div>
+        <div class="card__body"><p>Recruitment, onboarding, benefits, compensation, leave, performance, workforce planning, and employee experience.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">90</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--purple">20 Deep Dives</span>
+        </div>
+      </a>
+
+      <!-- Project Operations -->
+      <a href="project-ops.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/ProjectOperations_scalable.svg" alt="Project Operations" class="card__icon">
+          <div class="card__title">Project Operations</div>
+        </div>
+        <div class="card__body"><p>Project quoting, resource scheduling, time & expense, billing, revenue recognition, and delivery analytics.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">80</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--green">20 Deep Dives</span>
+        </div>
+      </a>
+
+      <!-- Customer Insights -->
+      <a href="customer-insights.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/CustomerInsights_scalable.svg" alt="Customer Insights" class="card__icon">
+          <div class="card__title">Customer Insights</div>
+        </div>
+        <div class="card__body"><p>Unified customer data platform plus real-time journey orchestration — data ingestion, segmentation, predictions, email &amp; SMS marketing, event management, and consent.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">117</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--blue">40 Deep Dives</span>
+        </div>
+      </a>
+
+      <!-- Cross-App -->
+      <a href="cross-app.html" class="module-card card">
+        <div class="card__accent"></div>
+        <div class="card__header">
+          <img src="../images/Dynamics365_scalable.svg" alt="Cross-App" class="card__icon">
+          <div class="card__title">Cross-App / Cross-Platform</div>
+        </div>
+        <div class="card__body"><p>Multi-module orchestration: Order-to-Cash, Hire-to-Retire, Source-to-Pay, and end-to-end process automation spanning all D365 apps.</p></div>
+        <div class="card__footer">
+          <div><span class="card__count">120</span> <span class="card__count-label">Agents</span></div>
+          <span class="badge badge--purple">20 Deep Dives</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECHNOLOGY STACK ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section__header fade-in">
+      <span class="section__tag">Platform Foundation</span>
+      <h2 class="section__title">Built on the Microsoft Intelligent Cloud</h2>
+      <p class="section__desc">Every agent leverages the full Microsoft ecosystem — from Dataverse and Power Platform to Azure AI and Copilot.</p>
+    </div>
+    <div class="card-grid fade-in" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <div class="stat-box" style="border-top-color: var(--ms-blue);">
+        <img src="../images/Azure.png" alt="Azure" style="height:40px; margin:0 auto 8px;">
+        <span class="stat-box__label">Azure AI & ML</span>
+        <p style="font-size:.82rem; color:var(--gray-500); margin-top:8px;">Azure OpenAI, ML, Cognitive Services, Event Hubs, Synapse</p>
+      </div>
+      <div class="stat-box" style="border-top-color: var(--ms-purple);">
+        <img src="../images/PowerPlatform_scalable.svg" alt="Power Platform" style="height:40px; margin:0 auto 8px;">
+        <span class="stat-box__label">Power Platform</span>
+        <p style="font-size:.82rem; color:var(--gray-500); margin-top:8px;">Power Automate, Power BI, Power Apps, Power Pages</p>
+      </div>
+      <div class="stat-box" style="border-top-color: var(--ms-teal);">
+        <img src="../images/Dataverse_scalable.svg" alt="Dataverse" style="height:40px; margin:0 auto 8px;">
+        <span class="stat-box__label">Dataverse</span>
+        <p style="font-size:.82rem; color:var(--gray-500); margin-top:8px;">Unified data, Dual Write, Virtual Entities, Business Events</p>
+      </div>
+      <div class="stat-box" style="border-top-color: var(--ms-green);">
+        <img src="../images/Copilot-icon.png" alt="Copilot" style="height:40px; margin:0 auto 8px;">
+        <span class="stat-box__label">Copilot</span>
+        <p style="font-size:.82rem; color:var(--gray-500); margin-top:8px;">Copilot for D365, natural language interaction, summarization</p>
+      </div>
+      <div class="stat-box" style="border-top-color: var(--ms-orange);">
+        <img src="../images/CopilotStudio_scalable.svg" alt="Copilot Studio" style="height:40px; margin:0 auto 8px;">
+        <span class="stat-box__label">Copilot Studio</span>
+        <p style="font-size:.82rem; color:var(--gray-500); margin-top:8px;">Custom copilots, agent orchestration, plugin framework</p>
+      </div>
+      <div class="stat-box" style="border-top-color: var(--ms-red);">
+        <img src="../images/AIBuilder_scalable.svg" alt="AI Builder" style="height:40px; margin:0 auto 8px;">
+        <span class="stat-box__label">AI Builder</span>
+        <p style="font-size:.82rem; color:var(--gray-500); margin-top:8px;">Document processing, prediction, object detection, text recognition</p>
+      </div>
+      <div class="stat-box" style="border-top-color: var(--ms-yellow);">
+        <img src="../images/PowerAutomate_scalable.svg" alt="Power Automate" style="height:40px; margin:0 auto 8px;">
+        <span class="stat-box__label">Integration</span>
+        <p style="font-size:.82rem; color:var(--gray-500); margin-top:8px;">Power Automate, Logic Apps, Service Bus, 1000+ connectors</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <div class="footer__col-title">Core Modules</div>
+        <a href="finance.html">Finance</a>
+        <a href="scm.html">Supply Chain</a>
+        <a href="sales.html">Sales</a>
+        <a href="customer-service.html">Customer Service</a>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Operations</div>
+        <a href="field-service.html">Field Service</a>
+        <a href="commerce.html">Commerce</a>
+        <a href="hr.html">Human Resources</a>
+        <a href="project-ops.html">Project Operations</a>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Intelligence</div>
+        <a href="customer-insights.html">Customer Insights</a>
+        <a href="cross-app.html">Cross-App / Cross-Platform</a>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">About</div>
+        <a href="#">Methodology</a>
+        <a href="#">Architecture Patterns</a>
+        <a href="#">Implementation Guide</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      &copy; 2026 D365 Agentic Cases — 1,001 AI Agents Across Dynamics 365
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" title="Scroll to top">↑</button>
+
+<!-- ============ SCRIPTS ============ -->
+<script src="shared.js"></script>
+<script>
+// Module data
+const modules = [
+  { name: 'SCM',                agents: 146, color: '#0078D4' },
+  { name: 'Finance',            agents: 125, color: '#6B2FA0' },
+  { name: 'Cross-App',          agents: 120, color: '#00B294' },
+  { name: 'Customer Insights',  agents: 117, color: '#06B6D4' },
+  { name: 'Commerce',           agents:  95, color: '#107C10' },
+  { name: 'HR',                 agents:  90, color: '#FF8C00' },
+  { name: 'Customer Service',   agents:  85, color: '#D13438' },
+  { name: 'Project Ops',        agents:  80, color: '#FFB900' },
+  { name: 'Field Service',      agents:  75, color: '#E3008C' },
+  { name: 'Sales',              agents:  68, color: '#003A6C' },
+];
+
+// Bar chart
+new Chart(document.getElementById('moduleBarChart'), {
+  type: 'bar',
+  data: {
+    labels: modules.map(m => m.name),
+    datasets: [{
+      label: 'Number of Agents',
+      data: modules.map(m => m.agents),
+      backgroundColor: modules.map(m => m.color),
+      borderRadius: 6,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, grid: { color: '#F3F4F6' } },
+      x: { grid: { display: false }, ticks: { maxRotation: 45 } }
+    }
+  }
+});
+
+// Doughnut
+new Chart(document.getElementById('moduleDoughnut'), {
+  type: 'doughnut',
+  data: {
+    labels: modules.map(m => m.name),
+    datasets: [{
+      data: modules.map(m => m.agents),
+      backgroundColor: modules.map(m => m.color),
+      borderWidth: 2,
+      borderColor: '#fff',
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 11 } } },
+    },
+    cutout: '55%',
+  }
+});
+
+// Radar — Business Functions
+new Chart(document.getElementById('functionRadar'), {
+  type: 'radar',
+  data: {
+    labels: ['Planning & Forecasting', 'Transaction Processing', 'Analytics & Reporting', 'Compliance & Audit', 'Customer Engagement', 'Resource Optimization', 'Process Automation'],
+    datasets: [{
+      label: 'Agent Coverage (Relative)',
+      data: [82, 90, 75, 60, 88, 78, 95],
+      backgroundColor: 'rgba(0,120,212,.15)',
+      borderColor: '#0078D4',
+      pointBackgroundColor: '#0078D4',
+      pointRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: { r: { beginAtZero: true, max: 100, ticks: { stepSize: 20 } } },
+  }
+});
+
+// Horizontal vs Industry bar
+new Chart(document.getElementById('horzIndChart'), {
+  type: 'bar',
+  data: {
+    labels: modules.map(m => m.name),
+    datasets: [
+      { label: 'Horizontal', data: Array(10).fill(10), backgroundColor: '#0078D4', borderRadius: 4 },
+      { label: 'Industry-Aligned', data: Array(10).fill(10), backgroundColor: '#6B2FA0', borderRadius: 4 },
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { maxRotation: 45 } },
+      y: { stacked: true, beginAtZero: true, grid: { color: '#F3F4F6' }, title: { display: true, text: 'Deep-Dive Cases' } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
