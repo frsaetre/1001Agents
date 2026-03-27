@@ -1,5 +1,5 @@
 /* ============================================================
-   D365 Agentic Cases — Shared JavaScript
+   D365 AI Cases — Shared JavaScript
    ============================================================ */
 
 // ---- Scroll-to-Top Button ----
@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+  // Immediately reveal any fade-in wrapper that contains an agent table
+  document.querySelectorAll('.fade-in').forEach(el => {
+    if (el.querySelector('.agent-table')) el.classList.add('visible');
+  });
+
   // ---- Agent Table Search ----
   const searchInput = document.getElementById('agentSearch');
   const areaFilter = document.getElementById('areaFilter');
@@ -35,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     searchInput.addEventListener('input', filterTable);
     if (areaFilter) areaFilter.addEventListener('change', filterTable);
+    // Run filter on load to ensure all rows are visible by default
+    filterTable();
   }
 
   // ---- Collapsible Sections ----
